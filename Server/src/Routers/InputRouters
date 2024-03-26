@@ -1,0 +1,30 @@
+const { Router } = require("express")
+const router = Router();
+
+// number of images to be read from the database
+
+let numImages = 5;
+
+// let the data be 
+var data = [
+    { image1 : "url1"},
+    {image2 : "url2" },
+    {image3 : "url3" },
+    {image4 : "url4"},
+    {image5 : "url5" },
+
+]
+
+router.get("localhost:3000/images",(request,response) => {
+    response.send(data)
+})
+
+for( var i =0; i<numImages; ++i) {
+    console.log(i);
+    router.get("localhost:3000/images/" + i , (request , response) => {
+        response.send(data[i]);
+    } )
+}
+
+
+module.exports = Router;
