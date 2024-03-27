@@ -1,0 +1,33 @@
+const { Router } = require("express")
+const router = Router();
+
+const connecttodb = require ( "../mongo")
+
+
+
+let db
+
+connecttodb.connectmondb((ready) => {
+       if (ready == 1) db = connecttodb.getinterface();
+})
+
+
+router.get("/images",(request,response) => {
+
+    let outputimages = []
+
+    db.collection("output").find().forEach( images => outputimages.push(images)).then(console.log("completed the request"))
+
+
+    response.send(outputimages);
+})
+
+router.get("/images/:id" , (request , response) => {
+    let requestedimg
+    var imageid = request.params.id
+    db.collection("output").find( {imageID : imageid}).forEach( images => requestedimg = images).then(console.log("completed the request"))
+    response.send(requestedimg)
+})
+
+
+module.exports = router;

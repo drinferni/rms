@@ -1,6 +1,15 @@
 const { Router } = require("express")
 const router = Router();
 
+const connecttodb = require ( "../mongo")
+
+
+
+connecttodb.connectmondb();
+
+let db = connecttodb.getinterface();
+
+
 // number of images to be read from the database
 
 let numImages = 5;
@@ -15,16 +24,14 @@ var data = [
 
 ]
 
-router.get("localhost:3000/images",(request,response) => {
+router.get("/images",(request,response) => {
     response.send(data)
 })
 
-for( var i =0; i<numImages; ++i) {
-    console.log(i);
-    router.get("localhost:3000/images/" + i , (request , response) => {
-        response.send(data[i]);
-    } )
-}
+router.get("/images/:id" , (request , response) => {
+    var imageid = request.params.id
+    response.send(data[imageid]);
+})
 
 
-module.exports = Router;
+module.exports = router;

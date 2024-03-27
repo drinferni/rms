@@ -14,7 +14,7 @@ export default {
     name:"visionComp",
     data () {
         return {
-            i:10,
+            i:0,
         }
     },
     methods : {
@@ -29,11 +29,12 @@ export default {
 
         async getData() {
             try {
-                const response = await axios.get('http://localhost:3000/data/'+ this.i);
+                const response = await axios.get('http://localhost:3000/images/' + this.i);
                 console.log(response.data); // Assuming you want to log the response data
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
+            this.i+=1
         }
     }
 }
