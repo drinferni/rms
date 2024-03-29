@@ -20,7 +20,7 @@ function connnectionstatus() {
 
 app.use ( outputrouter);
 
-console.log(connecttodb);
+//console.log(connecttodb);
 
 let db
 

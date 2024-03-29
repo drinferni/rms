@@ -29,12 +29,14 @@ export default {
 
         async getData() {
             try {
-                const response = await axios.get('http://localhost:3000/images/' + this.i);
-                console.log(response.data); // Assuming you want to log the response data
+                let temp = 'http://localhost:3000/images/' + this.i  ;
+                console.log(temp)
+                const response = await axios.get(temp);
+                console.log(response.data); 
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
-            this.i+=1
+            this.i = (this.i + 1)%6
         }
     }
 }

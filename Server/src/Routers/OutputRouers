@@ -3,30 +3,109 @@ const router = Router();
 
 const connecttodb = require ( "../mongo")
 
+async function connect() {
+    return new Promise((resolve, reject) => {
+        connecttodb.connectmondb((ready) => {
+            if (ready == 1) {
+                const db = connecttodb.getinterface();
+                resolve(db); // Resolve with the database interface
+            } else {
+                reject(new Error("Failed to connect to the database."));
+            }
+        });
+    });
+}
 
 
-let db
+async function getthecollection(collection,db) {
+    let result = db.collection(collection)
+    return result
+}
 
-connecttodb.connectmondb((ready) => {
-       if (ready == 1) db = connecttodb.getinterface();
-})
+async function getthecursorall(collection) {
+    let result = collection.find({})
+    return result
+}
 
+async function getthecursor(collection,imageid) {
+    let result = collection.find({ imageID : imageid})
+    return result
+}
+
+async function getalldata(collection, response) {
+    try {
+        console.log("Connecting to the database...");
+        const db = await connect();
+        console.log("Connected to the database.");
+
+        console.log("Accessing the collection...");
+        const collectio = await getthecollection(collection, db);
+        console.log("Accessing the collection successful.");
+
+        console.log("Accessing the cursor...");
+        const cursor = await getthecursorall(collectio);
+        console.log("Accessing the cursor successful.");
+
+        console.log("Retrieving data...");
+        const data = await cursor.toArray();
+        console.log("Data retrieved successfully.");
+
+        console.log("Sending the response...");
+        response.send(data);
+        console.log("Response sent.");
+    } catch (error) {
+        console.error("Error:", error.message);
+        response.status(500).send("Internal Server Error");
+    }
+}
+
+async function getdata(collection, response,imageid) {
+    try {
+        console.log("Connecting to the database...");
+        const db = await connect();
+        console.log("Connected to the database.");
+
+        console.log("Accessing the collection...");
+        const collectio = await getthecollection(collection, db);
+        console.log("Accessing the collection successful.");
+
+        console.log("Accessing the cursor...");
+        const cursor = await getthecursor(collectio,imageid);
+        console.log("Accessing the cursor successful.");
+
+        console.log("Retrieving data...");
+        const data = await cursor.toArray();
+        console.log("Data retrieved successfully.");
+
+        console.log("Sending the response...");
+        response.send(data);
+        console.log("Response sent.");
+    } catch (error) {
+        console.error("Error:", error.message);
+        response.status(500).send("Internal Server Error");
+    }
+}
 
 router.get("/images",(request,response) => {
 
-    let outputimages = []
 
-    db.collection("output").find().forEach( images => outputimages.push(images)).then(console.log("completed the request"))
+  //  db.collection("output").find().forEach( images => outputimages.push(images)).then(console.log("completed the request")).then()
+
+    getalldata('output',response)
+        
 
 
-    response.send(outputimages);
+
+    
 })
 
 router.get("/images/:id" , (request , response) => {
     let requestedimg
-    var imageid = request.params.id
-    db.collection("output").find( {imageID : imageid}).forEach( images => requestedimg = images).then(console.log("completed the request"))
-    response.send(requestedimg)
+    var temp = request.params.id
+    var imageid = "" + temp
+
+    console.log(imageid)
+    getdata('output',response,imageid)
 })
 
 
