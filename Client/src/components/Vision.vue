@@ -26,7 +26,8 @@ export default {
         //     let result = await axios.post('localhost:3000');
         //     console.log(result);
         // }
-
+        
+        // getting data form the mongodb
         async getData() {
             try {
                 let temp = 'http://localhost:3000/images/' + this.i  ;

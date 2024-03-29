@@ -6,48 +6,30 @@ const outputrouter = require("./Routers/OutputRouers");
 
 
 
-
+// importing the express and setting the PORT
 const app = express();
 app.use(cors());
 const PORT = 3000;
 
+// connecting to the port
 app.use(express.json());
 function connnectionstatus() {
     console.log("connected to port");
 }
 
+
  app.listen(PORT,connnectionstatus) 
 
+// bringing the routers from of output router
 app.use ( outputrouter);
 
 //console.log(connecttodb);
 
 let db
 
+// connectong to the database
 connecttodb.connectmondb((ready) => {
        if (ready == 1) db = connecttodb.getinterface();
 })
-
-
-
-
-
-// app.post("/data",(request,response)=>{
-//     response.send("images")
-// })
-
-// app.get("/data",(request,response)=> {
-//     response.send({"images":10})
-// })
-
-// app.get("/data/10",(request,response)=> {
-//     response.send({"images":100})
-// })
-
-// app.post("/data",(request,response)=> {
-//     console.log(request.body);
-//     response.send(201);
-// })
-
 
 console.log("all routers are ready")
