@@ -1,20 +1,36 @@
 <template>
-    <div> this is vision </div>
-    <button @click="gotohome" > Home </button>
 
-    <button @click="uploadData">Upload</button>
-    <button @click="getData">GETDATA</button>
+    <button @click="gotohome" > Home </button>
+    <div v-if="home">
+        <div> this is vision </div>
+        <button @click="uploadData">Upload</button>
+        <button @click="getData">GETDATA</button>
+    </div>
+
+    <UploadComp v-if="upload"></UploadComp>
+    <GetComp v-if="getdata"></GetComp>
+
+
 </template>
 
 <script>
-import axios from 'axios';
+
+import UploadComp from  "./UploadImages.vue"
+import GetComp from "./GetImages.vue"
 //import { response } from 'express';
 
 export default {
     name:"visionComp",
+    components : {
+        UploadComp,
+        GetComp,
+    },
     data () {
         return {
             i:0,
+            home:1,
+            upload:0,
+            getdata:0
         }
     },
     methods : {
@@ -29,16 +45,17 @@ export default {
         
         // getting data form the mongodb
         async getData() {
-            try {
-                let temp = 'http://localhost:3000/images/' + this.i  ;
-                console.log(temp)
-                const response = await axios.get(temp);
-                console.log(response.data); 
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-            this.i = (this.i + 1)%6
+           this.home = 0;
+           this.upload=0;
+           this.getdata=1;
+        },
+
+        async uploadData() {
+            this.home = 0;
+           this.upload=1;
+           this.getdata=0;
         }
+
     }
 }
 </script>
