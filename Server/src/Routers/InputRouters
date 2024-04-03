@@ -1,6 +1,7 @@
+const multer = require("multer");
 const { Router } = require("express")
 const router = Router();
-const multer = require("multer");
+
 
 
 var i =0;
@@ -8,16 +9,20 @@ var i =0;
 
 const storage = multer.diskStorage({
     destination : (req,file,cb) => {
-        cb(null,"inputdata/")
+        cb(null,"inputdata")
     },
     filename : (req,file,cb) => {
-        console.log(toString(file))
-        cb(null,"i");
+        //console.log(file)
+        //console.log(file.originalname)
+        cb(null, i.toString() + '-' + file.originalname.toString());
+        ++i;
     }
 })
 const input = multer({storage});
 router.post( "/upload" , input.array("folder"),(req,res)=>{
-    res.send("get the files")
+    console.log(req);
+   // console.log(req.files);
+    res.send("got the files")
 })
 
 module.exports = router;

@@ -1,17 +1,26 @@
 <template>
 
-<input type="file" id="folderUpload" @click="preprocessfolder">
-<button v-if="datasending" @click="senddata">SEND DATA</button>
+<input v-if="datasending" type="file" @change="onFileChange" multiple="multiple">
 
+<div v-if="processing">
+    processing
+    <button @click="processingdata">SKIP</button>
+</div>
 
-
+<GetComp v-if="displayoutput"></GetComp>
 
 </template>
 
 <script>
+import axios from 'axios';
+
+import GetComp from "./GetImages.vue"
 
 export default {
     name:"UploadComp",
+    components : {
+        GetComp,
+    },
     data() {
         return {
             datasending:1,
@@ -21,22 +30,28 @@ export default {
         }
     },
     methods :{
-        async preprocessfolder () {
-            document.getElementById('folderUpload').addEventListener('change', function(e) {
-                this.folderpath = this.value
-                console.log(this.folderpath)
-                console.log(e.target.files[0])
-            })               
-        },
-        async senddata () {
-            // code to send data to the cloud
-            // send sendsignal;
-            this.datasend=0;
-            this.processing=1;
-            this.displayoutput=0;
-        } ,
-        async processingdata () {
-            var signal = 0;
+
+    onFileChange(event) {
+    console.log(event.target.files)
+      const file = event.target.files;
+      for ( let i =0;i<file.length ;++i) {
+        const input = file[i];
+        this.uploadFile(input);
+      }
+      this.uploadFile(file);
+    },
+    uploadFile(file) {
+      const formData = new FormData();
+      formData.append('folder', file);
+
+      axios.post('http://localhost:3000/upload', formData)
+    
+      this.datasending = 0;
+      this.processing = 1;
+
+     },
+      async processingdata () {
+            var signal = 1;
             while (signal == 0) {
             // check the processing signal
             }
