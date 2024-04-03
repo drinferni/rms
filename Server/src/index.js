@@ -1,9 +1,10 @@
 const express = require('express');
+const multer = require("multer")
 const connecttodb = require ( "./mongo")
 const cors = require('cors');
 
 const outputrouter = require("./Routers/OutputRouers");
-
+const inputrouter = require("./Routers/InputRouters");
 
 
 // importing the express and setting the PORT
@@ -22,7 +23,7 @@ function connnectionstatus() {
 
 // bringing the routers from of output router
 app.use ( outputrouter);
-
+app.use(inputrouter);
 //console.log(connecttodb);
 
 let db

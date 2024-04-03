@@ -1,0 +1,23 @@
+const { Router } = require("express")
+const router = Router();
+const multer = require("multer");
+
+
+var i =0;
+
+
+const storage = multer.diskStorage({
+    destination : (req,file,cb) => {
+        cb(null,"inputdata/")
+    },
+    filename : (req,file,cb) => {
+        console.log(toString(file))
+        cb(null,"i");
+    }
+})
+const input = multer({storage});
+router.post( "/upload" , input.array("folder"),(req,res)=>{
+    res.send("get the files")
+})
+
+module.exports = router;

@@ -4,33 +4,28 @@
     <div v-if="home">
         <div> this is vision </div>
         <button @click="uploadData">Upload</button>
-        <button @click="getData">GETDATA</button>
     </div>
 
     <UploadComp v-if="upload"></UploadComp>
-    <GetComp v-if="getdata"></GetComp>
 
 
 </template>
 
 <script>
 
-import UploadComp from  "./UploadImages.vue"
-import GetComp from "./GetImages.vue"
+import UploadComp from  "./UploadVideo.vue"
 //import { response } from 'express';
 
 export default {
     name:"visionComp",
     components : {
         UploadComp,
-        GetComp,
     },
     data () {
         return {
             i:0,
             home:1,
             upload:0,
-            getdata:0
         }
     },
     methods : {
@@ -44,16 +39,9 @@ export default {
         // }
         
         // getting data form the mongodb
-        async getData() {
-           this.home = 0;
-           this.upload=0;
-           this.getdata=1;
-        },
-
-        async uploadData() {
+         uploadData() {
             this.home = 0;
            this.upload=1;
-           this.getdata=0;
         }
 
     }
