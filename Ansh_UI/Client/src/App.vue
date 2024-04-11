@@ -2,11 +2,33 @@
   <div v-if="choose" id="master-container">
     <div id="main-container">
       <div id="vision-wrapper">
-        <div @click="choosevision" id="Vision">VISION</div>
+        <div  id="Vision">
+            <div id="animation">
+             <svg id="vision-anime"  width="484" height="202" viewBox="0 0 484 402" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M251 0.5H234.5L0 402H484L251 0.5Z" fill="#E7EC0B"/>
+            </svg>
+
+
+          </div>
+          <div class="button-wrapper">
+            <button class="button" @click="choosevision">VISION</button>
+          </div>
+        </div>
       </div>
+
+
       <div id="ultrasound-wrapper">
-        <div  @click="chooseultrasound" id="UltraSound">ULTRASOUND</div>
+        <div  id="UltraSound">
+          <div id="animation">
+
+          </div>
+          <div class="button-wrapper">
+            <button class="button" @click="chooseultrasound">ULTRASOUND</button>
+          </div>
+        </div>
       </div>
+
+
     </div>
   </div>
  <visionComp @home="choosechoose" v-if="enableVision"></visionComp>
@@ -73,8 +95,8 @@ need to add a new text font . add colour and make it good till end of week
   height : 75vh;
   width : 95%;
   display:grid;
-  grid-template-rows: repeat(3,1fr);
-  grid-template-columns: repeat(5,1fr);
+  grid-template-rows: repeat(1,1fr);
+  grid-template-columns: repeat(2,1fr);
   align-content: space-evenly;
   align-items: stretch;
   justify-items: stretch;
@@ -84,7 +106,7 @@ need to add a new text font . add colour and make it good till end of week
 #vision-wrapper {
   display : grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 9fr 1fr;
   align-items : center;
   justify-items : center;
 }
@@ -93,15 +115,15 @@ need to add a new text font . add colour and make it good till end of week
 #ultrasound-wrapper {
   display : grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 9fr 1fr;
   align-items : center;
   justify-items : center;
 }
 
 
 #Vision,#UltraSound {
-  height : 150px;
-  width : 250px;
+  height : 400px;
+  width : 500px;
   display : grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
@@ -113,5 +135,8 @@ need to add a new text font . add colour and make it good till end of week
 
 }
 
+#vision-anime {
+background: url("data:image/svg+xml,%3Csvg width='484' height='202' viewBox='0 0 484 402' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M251 0.5H234.5L0 402H484L251 0.5Z' fill='%23E7EC0B'/%3E%3C/svg%3E%0A");
+}
 
 </style>
