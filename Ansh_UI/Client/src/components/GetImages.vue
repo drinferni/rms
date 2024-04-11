@@ -37,3 +37,11 @@ export default {
 }
 
 </script>
+
+
+<!-- <style scoped>
+need to ask the the precise format of the data we will be getting
+update the datbase
+make dummy data
+fetch the data arange and then add color to the things
+</style> -->
