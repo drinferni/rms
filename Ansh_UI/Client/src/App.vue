@@ -1,8 +1,10 @@
 <template>
   <div v-if="choose" id="master-container">
     <div id="main-container">
+
+
       <div id="vision-wrapper">
-        <div  id="Vision" @mouseenter="hover=true" @mouseleave="hover =false"  @click="choosevision">
+        <div  id="Vision" @mouseenter="startanimevision" @mouseleave="hover1 =false"  @click="choosevision">
           <div id="camera" >
             <img  src="./assets/camera-image.webp" height="75px" width="75px">
           </div>
@@ -19,15 +21,17 @@
 
 
       <div id="ultrasound-wrapper">
-        <div  id="UltraSound">
-          <div id="animation">
-
+        <div  id="UltraSound"  @mouseenter="startanimeult" @mouseleave="hover2 =false"  @click="chooseultrasound">
+          <div id="wheel" >
+            <img  id="wheelrotate"  src="./assets/wheel.png" height="`160px" width="200px">
           </div>
-          <div class="button-wrapper">
-            <button class="button" @click="chooseultrasound">ULTRASOUND</button>
+          <div id="track-ult">
+            <img  src="./assets/2.jpg" height="100px" width="500px">
           </div>
         </div>
       </div>
+
+
     </div>
   </div>
  <visionComp @home="choosechoose" v-if="enableVision"></visionComp>
@@ -50,20 +54,59 @@ export default {
       choose:1,
       enableUltrasound:0,
       enableVision:0,
-      hover : false,
-      imgsize :"M 250 0  H 240  L 0 260  H 490 L 250 0  Z",
+      hover1 : false,
+      hover2 : false,
+      imgsize :"",
       imgsize1 : "M 250 0  H 240  L ",
-      height : 0,
+      height : 0 ,
       diff : 0,
-      imgsize2 : "L 250 0  Z"
+      imgsize2 : "L 250 0  Z",
+      angle : 0,
 
     }
   },
   methods: {
-
-    
-
-    choosevision () {
+     startanimevision () {
+      this.hover1 = true;
+      this.height = 0
+       this.startlight();
+     },
+     startanimeult () {
+      this.hover2 = true;
+      this.startwave();
+     },
+     startlight() {
+    const interval = setInterval(() => {
+        this.height += 5;
+        this.diff = 260 * this.height;
+        this.diff = this.diff / 240;
+        var left = 240 - this.diff;
+        var right = 250 + this.diff;
+        this.imgsize = this.imgsize1 + ' ' + left + ' ' + this.height + " H " + right + ' ' + this.imgsize2;
+        console.log(this.imgsize);
+        
+        if (this.hover1 == false || this.height > 260) {
+            this.imgsize  = "";
+            clearInterval(interval); 
+        }
+    }, 1);
+},
+  startwave () {
+    const interval = setInterval(() => {
+      console.log(this.angle)
+        this.angle = (this.angle + 5) %360
+        const element = document.getElementById("wheelrotate")
+        element.style.transform = "rotate(" + this.angle + "deg)"
+        
+        
+        if (this.hover2 == false || this.height > 260) {
+            this.imgsize  = "";
+            clearInterval(interval); 
+        }
+    }, 1);
+  }
+,
+choosevision () {
       this.choose=0
       this.enableVision=1
     },
@@ -139,11 +182,7 @@ need to add a new text font . add colour and make it good till end of week
   border-style: solid;
 }
 
-#animation-vision {
-  display:grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 5fr 1fr;
-}
+
 
 #camera {
   grid-area: 2 / 9 / 4 / 13;
@@ -154,7 +193,15 @@ need to add a new text font . add colour and make it good till end of week
 }
 
 #track-vision {
-  grid-area: 16 / 2 / 20 / 20;
+  grid-area: 15 / 2 / 20 / 20;
+}
+
+#wheel {
+  grid-area: 4 / 5 / 10 / 17;
+}
+
+#track-ult {
+  grid-area: 12 / 2 / 17 / 20;
 }
 
 
