@@ -10,11 +10,11 @@
           </div>
           <div id="vision-anime">
             <svg   width="490" height="260" viewBox="0 0 490 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path :d="imgsize" fill="#E7EC0B"/>
+              <path :d="imgsize" stroke-width="5px"  stroke="#e8e4c8"></path>
              </svg>
           </div>
           <div id="track-vision">
-            <img  src="./assets/2.jpg" height="100px" width="500px">
+            <img  src="./assets/13-new.jpg" height="150px" width="500px">
           </div>
         </div>
       </div>
@@ -25,8 +25,12 @@
           <div id="wheel" >
             <img  id="wheelrotate"  src="./assets/wheel.png" height="`160px" width="200px">
           </div>
+          <svg id="wave" width="400" height=" 0">
+            <circle cx="100" cy="100" r="50" stroke="black" stroke-width="10" fill="none" />
+          </svg>
+          
           <div id="track-ult">
-            <img  src="./assets/2.jpg" height="100px" width="500px">
+            <img  src="./assets/13-new.jpg" height="550px" width="500px">
           </div>
         </div>
       </div>
@@ -85,8 +89,7 @@ export default {
         this.imgsize = this.imgsize1 + ' ' + left + ' ' + this.height + " H " + right + ' ' + this.imgsize2;
         console.log(this.imgsize);
         
-        if (this.hover1 == false || this.height > 260) {
-            this.imgsize  = "";
+        if (this.hover1 == false || this.height > 180) {
             clearInterval(interval); 
         }
     }, 1);
@@ -99,7 +102,7 @@ export default {
         element.style.transform = "rotate(" + this.angle + "deg)"
         
         
-        if (this.hover2 == false || this.height > 260) {
+        if (this.hover2 == false ) {
             this.imgsize  = "";
             clearInterval(interval); 
         }
@@ -178,8 +181,6 @@ need to add a new text font . add colour and make it good till end of week
   grid-template-rows: repeat(20,1fr);
   align-items : center;
   justify-items : center;
-  border : 5px;
-  border-style: solid;
 }
 
 
@@ -190,18 +191,23 @@ need to add a new text font . add colour and make it good till end of week
 
 #vision-anime {
   grid-area: 4 / 2 / 17 / 20;
+  z-index : 1;
 }
 
 #track-vision {
-  grid-area: 15 / 2 / 20 / 20;
+  grid-area: 10 / 2 / 20 / 20;
 }
 
 #wheel {
-  grid-area: 4 / 5 / 10 / 17;
+  grid-area: 4 / 5 / 13 / 17;
+}
+
+#wave {
+    grid-area : 10 / 1 / 13 / 20;
 }
 
 #track-ult {
-  grid-area: 12 / 2 / 17 / 20;
+grid-area: 18 / 2 / 20 / 20;
 }
 
 
